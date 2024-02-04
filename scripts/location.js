@@ -9,7 +9,13 @@ function ReverseGeocoding(location, callback) {
         if (req_obj.readyState === XMLHttpRequest.DONE) {
             if (req_obj.status === 200) {
                 // Invoke the callback with the response text
-                localStorage.setItem("response", req_obj.responseText);
+                const geoData = JSON.parse(req_obj.responseText);
+                const clickNextLink = document.querySelector(".next-link");
+                const country = geoData.countryName;
+                const city = geoData.city;
+                const district = geoData.locality;
+                console.log(country, city, district);
+                clickNextLink.href = `https://emmanuelobolo.pythonanywhere.com/qwik_aid/first?country=${country}&city=${city}&district=${district}`;
                 callback(null, req_obj.responseText);
             } else {
                 console.log("Request was unsuccessful!!!");
@@ -20,8 +26,6 @@ function ReverseGeocoding(location, callback) {
     };
 
     req_obj.send();
-    const geoData = JSON.parse(localStorage.getItem("response"));
-    const clickNextLink = document.querySelector("next-link");
     const buttonDisplay = document.querySelector('.former-btn');
     const buttonTwoDisplay = document.querySelector('#next-location');
     buttonDisplay.classList.add('not-allow');
@@ -31,10 +35,6 @@ function ReverseGeocoding(location, callback) {
         <p></p>
     `;
     divAfterText.innerHTML = htmlContent;
-    const country = geoData.countryName;
-    const city = geoData.city;
-    const district = geoData.locality;
-    clickNextLink.href = `https://emmanuelobolo.pythonanywhere.com/qwik_aid/first?country=${country}&city=${city}&district=${district}`;
 }
 
 function geoFindMe() {
@@ -47,8 +47,7 @@ function geoFindMe() {
             if (error) {
                 console.error(error);
             } else {
-                // localStorage.setItem("response", response);
-                console.log("data already stored in localstorage");
+                localStorage.setItem("response", response);
             }
         });
     }
