@@ -15,7 +15,7 @@ function ReverseGeocoding(location, callback) {
                 const city = geoData.city;
                 const district = geoData.locality;
                 console.log(country, city, district);
-                clickNextLink.href = `https://emmanuelobolo.pythonanywhere.com/qwik_aid/first?country=${country}&city=${city}&district=${district}`;
+                clickNextLink.href = `https://emmanuelobolo.pythonanywhere.com/qwik_aids/first?country=${country}&city=${city}&district=${district}`;
                 callback(null, req_obj.responseText);
             } else {
                 console.log("Request was unsuccessful!!!");
@@ -26,15 +26,20 @@ function ReverseGeocoding(location, callback) {
     };
 
     req_obj.send();
-    const buttonDisplay = document.querySelector('.former-btn');
-    const buttonTwoDisplay = document.querySelector('#next-location');
-    buttonDisplay.classList.add('not-allow');
-    buttonTwoDisplay.classList.remove('not-allow')
-    const divAfterText = document.querySelector("#below-text");
-    const htmlContent = `
-        <p></p>
-    `;
-    divAfterText.innerHTML = htmlContent;
+    // Add a delay of 4 seconds before executing the next line
+    setTimeout(function() {
+        // Your code to be executed after the delay
+        const buttonDisplay = document.querySelector('.former-btn');
+        const buttonTwoDisplay = document.querySelector('#next-location');
+        buttonDisplay.classList.add('not-allow');
+        buttonTwoDisplay.classList.remove('not-allow');
+        const divAfterText = document.querySelector("#below-text");
+        const htmlContent = `
+            <p></p>
+        `;
+        divAfterText.innerHTML = htmlContent;
+    }, 1500);
+
 }
 
 function geoFindMe() {
